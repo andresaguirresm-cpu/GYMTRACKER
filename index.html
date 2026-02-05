@@ -125,33 +125,54 @@
         /* Filters */
         .filters {
             display: flex;
-            gap: 0.75rem;
+            gap: 1rem;
             margin-bottom: 2rem;
             flex-wrap: wrap;
+            align-items: center;
         }
 
-        .filter-btn {
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .filter-label {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .filter-select {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            color: var(--text-secondary);
-            padding: 0.625rem 1.25rem;
-            border-radius: 25px;
+            color: var(--text-primary);
+            padding: 0.625rem 2.5rem 0.625rem 1rem;
+            border-radius: 10px;
             font-size: 0.875rem;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.2s ease;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23a3e635'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            background-size: 1rem;
         }
 
-        .filter-btn:hover {
-            background: var(--bg-card-hover);
+        .filter-select:hover {
             border-color: var(--accent);
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(163, 230, 53, 0.2);
+        }
+
+        .filter-select option {
+            background: var(--bg-card);
             color: var(--text-primary);
-        }
-
-        .filter-btn.active {
-            background: var(--accent);
-            border-color: var(--accent);
-            color: var(--bg-primary);
         }
 
         /* WOD Grid */
@@ -790,13 +811,24 @@
             </div>
 
             <div class="filters">
-                <button class="filter-btn active" data-filter="all">Todos</button>
-                <button class="filter-btn" data-filter="easy">Fácil</button>
-                <button class="filter-btn" data-filter="medium">Medio</button>
-                <button class="filter-btn" data-filter="hard">Difícil</button>
-                <button class="filter-btn" data-filter="upper">Upper</button>
-                <button class="filter-btn" data-filter="lower">Lower</button>
-                <button class="filter-btn" data-filter="balanced">Balanceado</button>
+                <div class="filter-group">
+                    <span class="filter-label">Dificultad:</span>
+                    <select class="filter-select" id="filterDifficulty">
+                        <option value="all">Todos</option>
+                        <option value="easy">Fácil</option>
+                        <option value="medium">Medio</option>
+                        <option value="hard">Difícil</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <span class="filter-label">Enfoque:</span>
+                    <select class="filter-select" id="filterFocus">
+                        <option value="all">Todos</option>
+                        <option value="upper">Upper</option>
+                        <option value="lower">Lower</option>
+                        <option value="balanced">Balanceado</option>
+                    </select>
+                </div>
             </div>
 
             <div class="wod-grid" id="wodGrid">
@@ -1353,13 +1385,18 @@
         ];
 
         // Render WOD Cards
-        function renderWodCards(filter = 'all') {
+        function renderWodCards() {
             const grid = document.getElementById('wodGrid');
+            const difficultyFilter = document.getElementById('filterDifficulty').value;
+            const focusFilter = document.getElementById('filterFocus').value;
+
             let filteredWods = wods;
-            if (filter === 'easy' || filter === 'medium' || filter === 'hard') {
-                filteredWods = wods.filter(w => w.difficulty === filter);
-            } else if (filter === 'upper' || filter === 'lower' || filter === 'balanced') {
-                filteredWods = wods.filter(w => w.focus === filter);
+
+            if (difficultyFilter !== 'all') {
+                filteredWods = filteredWods.filter(w => w.difficulty === difficultyFilter);
+            }
+            if (focusFilter !== 'all') {
+                filteredWods = filteredWods.filter(w => w.focus === focusFilter);
             }
 
             grid.innerHTML = filteredWods.map(wod => `
@@ -1747,13 +1784,8 @@
         });
 
         // Filter handlers
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                renderWodCards(btn.dataset.filter);
-            });
-        });
+        document.getElementById('filterDifficulty').addEventListener('change', renderWodCards);
+        document.getElementById('filterFocus').addEventListener('change', renderWodCards);
 
         // Initialize
         renderWodCards();
