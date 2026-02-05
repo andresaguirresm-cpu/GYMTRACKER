@@ -234,6 +234,15 @@
             color: var(--difficulty-hard);
         }
 
+        .wod-focus {
+            padding: 0.25rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            background: rgba(163, 230, 53, 0.15);
+            color: var(--accent);
+        }
+
         .wod-name {
             font-size: 1.25rem;
             font-weight: 700;
@@ -777,7 +786,7 @@
         <section id="stage1">
             <div class="stage-header">
                 <h1 class="stage-title">Jaz, Andrés, escojan su <span>WOD</span> de hoy</h1>
-                <p class="stage-subtitle">10 entrenamientos intensos para llevar tu fitness al siguiente nivel</p>
+                <p class="stage-subtitle">15 entrenamientos intensos para llevar tu fitness al siguiente nivel</p>
             </div>
 
             <div class="filters">
@@ -785,6 +794,9 @@
                 <button class="filter-btn" data-filter="easy">Fácil</button>
                 <button class="filter-btn" data-filter="medium">Medio</button>
                 <button class="filter-btn" data-filter="hard">Difícil</button>
+                <button class="filter-btn" data-filter="upper">Upper</button>
+                <button class="filter-btn" data-filter="lower">Lower</button>
+                <button class="filter-btn" data-filter="balanced">Balanceado</button>
             </div>
 
             <div class="wod-grid" id="wodGrid">
@@ -821,11 +833,13 @@
         const wods = [
             {
                 id: 1,
-                name: "DT Adaptado",
-                description: "Clásico benchmark de fuerza con mancuernas. Enfocado en movimientos de levantamiento olímpico adaptados.",
+                name: "Core & Conditioning",
+                description: "Entrenamiento funcional enfocado en core y resistencia general.",
                 difficulty: "medium",
                 difficultyLabel: "Medio",
-                totalTime: 20,
+                focus: "balanced",
+                focusLabel: "Balanceado",
+                totalTime: 15,
                 warmup: {
                     time: 5,
                     format: "AMRAP 5min",
@@ -837,28 +851,29 @@
                     ]
                 },
                 main: {
-                    time: 15,
-                    format: "5 rounds for time",
+                    time: 10,
+                    format: "AMRAP 10min",
                     exercises: [
-                        { name: "DB Deadlifts", reps: "12" },
-                        { name: "DB Hang Power Cleans", reps: "9", video: "7584871443297619214" },
-                        { name: "DB Push Jerks", reps: "6", video: "7490660216896474414" }
-                    ],
-                    notes: "DBs moderados (15-20kg c/u)"
+                        { name: "Sit-ups", reps: "10" },
+                        { name: "KB Swings", reps: "10" },
+                        { name: "Push-ups", reps: "10" }
+                    ]
                 },
                 tips: [
-                    { title: "Deadlift", desc: "Mantén la espalda recta y empuja con las piernas" },
-                    { title: "Hang Clean", desc: "El movimiento viene de la cadera, no de los brazos" },
-                    { title: "Push Jerk", desc: "Usa las piernas para impulsar el peso sobre la cabeza" }
+                    { title: "Ritmo", desc: "Mantén ritmo constante" },
+                    { title: "Swing", desc: "Cuida la técnica del swing" },
+                    { title: "Respiración", desc: "Respira de forma controlada" }
                 ]
             },
             {
                 id: 2,
-                name: "The Seven Adaptado",
-                description: "WOD en honor a los 7 agentes de la CIA. Trabajo de cuerpo completo con kettlebell y peso corporal.",
-                difficulty: "hard",
-                difficultyLabel: "Difícil",
-                totalTime: 20,
+                name: "Lower Engine",
+                description: "Trabajo de tren inferior con estímulo metabólico.",
+                difficulty: "medium",
+                difficultyLabel: "Medio",
+                focus: "lower",
+                focusLabel: "Lower",
+                totalTime: 18,
                 warmup: {
                     time: 5,
                     format: "AMRAP 5min",
@@ -870,27 +885,30 @@
                     ]
                 },
                 main: {
-                    time: 15,
-                    format: "7 rounds",
+                    time: 13,
+                    format: "For Time ~13min",
                     exercises: [
-                        { name: "KB Swings", reps: "7", note: "24/32kg" },
-                        { name: "Burpees", reps: "7" },
-                        { name: "Goblet Squats", reps: "7" }
+                        { name: "Squats", reps: "40" },
+                        { name: "Lunges", reps: "30" },
+                        { name: "Jump Squats", reps: "20" },
+                        { name: "Burpees", reps: "10" }
                     ]
                 },
                 tips: [
-                    { title: "KB Swing", desc: "El poder viene de la cadera, los brazos solo guían" },
-                    { title: "Burpees", desc: "Mantén un ritmo constante, no sprintes al inicio" },
-                    { title: "Goblet Squat", desc: "Pecho arriba, codos adentro de las rodillas" }
+                    { title: "Bajadas", desc: "Controla bajadas" },
+                    { title: "Pacing", desc: "No quemes todo al inicio" },
+                    { title: "Balance", desc: "Usa brazos para balance" }
                 ]
             },
             {
                 id: 3,
-                name: "Randy Modificado",
-                description: "Alto volumen de snatches con descanso activo. Excelente para potencia unilateral.",
+                name: "Push Focus",
+                description: "Empujes de tren superior con fatiga progresiva.",
                 difficulty: "medium",
                 difficultyLabel: "Medio",
-                totalTime: 20,
+                focus: "upper",
+                focusLabel: "Upper",
+                totalTime: 17,
                 warmup: {
                     time: 5,
                     format: "EMOM 5min",
@@ -903,26 +921,29 @@
                     ]
                 },
                 main: {
-                    time: 15,
-                    format: "For time",
+                    time: 12,
+                    format: "AMRAP 12min",
                     exercises: [
-                        { name: "DB Snatches (alternando brazos)", reps: "50", video: "7544474427631684919" }
-                    ],
-                    notes: "Cada 2min: 10 push-ups | DB moderado (15-20kg)"
+                        { name: "Push-ups", reps: "10" },
+                        { name: "DB Shoulder Press", reps: "10" },
+                        { name: "Burpees", reps: "8" }
+                    ]
                 },
                 tips: [
-                    { title: "Snatch", desc: "Un movimiento fluido desde el suelo hasta arriba" },
-                    { title: "Ritmo", desc: "Los push-ups son descanso activo, no sprintes" },
-                    { title: "Agarre", desc: "Cambia de mano en la parte alta del movimiento" }
+                    { title: "Core", desc: "Mantén core activo" },
+                    { title: "Codos", desc: "No bloquees codos" },
+                    { title: "Ritmo", desc: "Ritmo sostenible" }
                 ]
             },
             {
                 id: 4,
-                name: "Kalsu Version",
-                description: "Brutal combo de thrusters con burpees cada minuto. Solo para los más valientes.",
-                difficulty: "hard",
-                difficultyLabel: "Difícil",
-                totalTime: 40,
+                name: "Conditioning Mix",
+                description: "WOD fluido para entrar en ritmo.",
+                difficulty: "easy",
+                difficultyLabel: "Fácil",
+                focus: "balanced",
+                focusLabel: "Balanceado",
+                totalTime: 15,
                 warmup: {
                     time: 10,
                     format: "2 rounds",
@@ -930,32 +951,35 @@
                         { name: "Air Squats", reps: "15" },
                         { name: "Push-ups", reps: "10" },
                         { name: "DB Swings ligeros", reps: "10" },
-                        { name: "Inchworms", reps: "10", video: "7458390246472813830" },
+                        { name: "Inchworms", reps: "10" },
                         { name: "Jumping Jacks", reps: "15" },
                         { name: "Mountain Climbers", reps: "20" }
                     ]
                 },
                 main: {
-                    time: 30,
-                    format: "For time",
+                    time: 10,
+                    format: "AMRAP 10min",
                     exercises: [
-                        { name: "DB Thrusters", reps: "100" }
-                    ],
-                    notes: "Cada minuto (on the minute): 5 burpees | DBs moderados (10-15kg c/u)"
+                        { name: "Squats", reps: "10" },
+                        { name: "KB Deadlift", reps: "10" },
+                        { name: "Sit-ups", reps: "10" }
+                    ]
                 },
                 tips: [
-                    { title: "Estrategia", desc: "Rompe los thrusters en sets manejables" },
-                    { title: "Burpees", desc: "Hazlos rápido para maximizar tiempo de trabajo" },
-                    { title: "Respiración", desc: "Exhala en la parte alta del thruster" }
+                    { title: "Técnica", desc: "Prioriza técnica" },
+                    { title: "Respiración", desc: "Respira nasal" },
+                    { title: "Fluidez", desc: "Fluidez > velocidad" }
                 ]
             },
             {
                 id: 5,
-                name: "Dirty Thirty",
-                description: "30 reps de 7 ejercicios diferentes. Trabajo completo de todo el cuerpo con finisher de core.",
-                difficulty: "hard",
-                difficultyLabel: "Difícil",
-                totalTime: 50,
+                name: "Core Burner",
+                description: "Core y estabilidad con baja carga.",
+                difficulty: "easy",
+                difficultyLabel: "Fácil",
+                focus: "balanced",
+                focusLabel: "Balanceado",
+                totalTime: 14,
                 warmup: {
                     time: 10,
                     format: "2 rounds",
@@ -963,47 +987,35 @@
                         { name: "Air Squats", reps: "15" },
                         { name: "Push-ups", reps: "10" },
                         { name: "DB Swings ligeros", reps: "10" },
-                        { name: "Inchworms", reps: "10", video: "7458390246472813830" },
+                        { name: "Inchworms", reps: "10" },
                         { name: "Jumping Jacks", reps: "15" },
                         { name: "Mountain Climbers", reps: "20" }
                     ]
                 },
                 main: {
-                    time: 30,
-                    format: "30 reps de cada, for time",
+                    time: 9,
+                    format: "EMOM 9min",
                     exercises: [
-                        { name: "Jump Squats (o Air Squats)", reps: "30" },
-                        { name: "Renegade Rows con DB", reps: "30" },
-                        { name: "KB Swings", reps: "30" },
-                        { name: "Reverse Lunges alternados", reps: "30 c/pierna" },
-                        { name: "Burpees", reps: "30" },
-                        { name: "Push-ups", reps: "30" },
-                        { name: "Sit-ups", reps: "30" }
-                    ]
-                },
-                finisher: {
-                    time: 10,
-                    format: "4 rondas",
-                    exercises: [
-                        { name: "Plank", reps: "45seg" },
-                        { name: "Leg Raises", reps: "15" },
-                        { name: "Burpees", reps: "10" },
-                        { name: "Hollow Hold", reps: "30seg" }
+                        { name: "Min 1: Plank", reps: "20seg" },
+                        { name: "Min 2: Sit-ups", reps: "15" },
+                        { name: "Min 3: Jumping Jacks", reps: "30" }
                     ]
                 },
                 tips: [
-                    { title: "Renegade Row", desc: "Cuerpo recto, sin rotar la cadera" },
-                    { title: "Pacing", desc: "Es largo, mantén un ritmo sostenible" },
-                    { title: "Core Finisher", desc: "Respira profundo en las posiciones isométricas" }
+                    { title: "Alineación", desc: "Mantén alineación" },
+                    { title: "Core", desc: "Core firme" },
+                    { title: "Respiración", desc: "No contengas respiración" }
                 ]
             },
             {
                 id: 6,
-                name: "Annie Adaptado",
-                description: "Clásico workout descendente 50-40-30-20-10. Push press y sit-ups en carrera contra el reloj.",
-                difficulty: "easy",
-                difficultyLabel: "Fácil",
-                totalTime: 20,
+                name: "Lower Power",
+                description: "Potencia y resistencia de piernas.",
+                difficulty: "medium",
+                difficultyLabel: "Medio",
+                focus: "lower",
+                focusLabel: "Lower",
+                totalTime: 18,
                 warmup: {
                     time: 5,
                     format: "EMOM 5min",
@@ -1016,26 +1028,29 @@
                     ]
                 },
                 main: {
-                    time: 15,
-                    format: "50-40-30-20-10 reps for time",
+                    time: 13,
+                    format: "For Time ~13min",
                     exercises: [
-                        { name: "DB Push Press (moderado)", reps: "50-40-30-20-10" },
-                        { name: "Sit-ups", reps: "50-40-30-20-10" }
+                        { name: "Squats", reps: "30" },
+                        { name: "Jump Squats", reps: "20" },
+                        { name: "Burpees", reps: "10" }
                     ]
                 },
                 tips: [
-                    { title: "Push Press", desc: "Usa las piernas para generar impulso" },
-                    { title: "Sit-ups", desc: "Ancla los pies o usa abmat para más rango" },
-                    { title: "Estrategia", desc: "Las primeras rondas son las más largas, pace inteligente" }
+                    { title: "Caderas", desc: "Usa caderas" },
+                    { title: "Impacto", desc: "Controla impacto" },
+                    { title: "Forma", desc: "Pausa si pierdes forma" }
                 ]
             },
             {
                 id: 7,
-                name: "Fran Adaptado",
-                description: "El benchmark más famoso del CrossFit en versión accesible. 21-15-9 de pura intensidad.",
+                name: "Upper Burn",
+                description: "Empuje y tirón del tren superior.",
                 difficulty: "medium",
                 difficultyLabel: "Medio",
-                totalTime: 20,
+                focus: "upper",
+                focusLabel: "Upper",
+                totalTime: 16,
                 warmup: {
                     time: 5,
                     format: "AMRAP 5min",
@@ -1043,31 +1058,33 @@
                         { name: "Push-ups", reps: "10" },
                         { name: "DB Bent-over Rows (ligeros)", reps: "10" },
                         { name: "Side Plank", reps: "30seg c/lado" },
-                        { name: "Inchworms", reps: "10", video: "7458390246472813830" }
+                        { name: "Inchworms", reps: "10" }
                     ]
                 },
                 main: {
-                    time: 15,
-                    format: "21-15-9 reps for time",
+                    time: 11,
+                    format: "AMRAP 11min",
                     exercises: [
-                        { name: "KB Swings", reps: "21-15-9", note: "24/32kg" },
-                        { name: "DB Thrusters", reps: "21-15-9", note: "12-15kg c/u" },
-                        { name: "Burpees", reps: "21-15-9" }
+                        { name: "Push-ups", reps: "10" },
+                        { name: "Barbell Bent Over Rows", reps: "10" },
+                        { name: "DB Shoulder Press", reps: "10" }
                     ]
                 },
                 tips: [
-                    { title: "21s", desc: "No vayas all-out, guarda para las últimas rondas" },
-                    { title: "Transiciones", desc: "Minimiza el descanso entre ejercicios" },
-                    { title: "Burpees", desc: "Encuentra un ritmo que puedas mantener" }
+                    { title: "Tempo", desc: "Controla tempo" },
+                    { title: "Escápulas", desc: "Escápulas activas" },
+                    { title: "Core", desc: "Core estable" }
                 ]
             },
             {
                 id: 8,
-                name: "Double Grace Adaptado",
-                description: "60 clean & jerks contra el reloj. Potencia explosiva y resistencia muscular.",
-                difficulty: "medium",
-                difficultyLabel: "Medio",
-                totalTime: 20,
+                name: "Conditioning Flow",
+                description: "Trabajo continuo sin picos de fatiga.",
+                difficulty: "easy",
+                difficultyLabel: "Fácil",
+                focus: "balanced",
+                focusLabel: "Balanceado",
+                totalTime: 15,
                 warmup: {
                     time: 5,
                     format: "AMRAP 5min",
@@ -1079,31 +1096,34 @@
                     ]
                 },
                 main: {
-                    time: 15,
-                    format: "For time",
+                    time: 10,
+                    format: "AMRAP 10min",
                     exercises: [
-                        { name: "DB Clean & Jerks", reps: "60", video: "7584871443297619214" }
-                    ],
-                    notes: "Alterna brazos cada 5 reps | DB moderado (15-20kg)"
+                        { name: "Squats", reps: "10" },
+                        { name: "Push-ups", reps: "10" },
+                        { name: "Jumping Jacks", reps: "10" }
+                    ]
                 },
                 tips: [
-                    { title: "Clean", desc: "Recibe el peso en rack position con codos altos" },
-                    { title: "Jerk", desc: "Dip-drive-press, usa las piernas" },
-                    { title: "Ritmo", desc: "5 reps por lado mantiene el trabajo equilibrado" }
+                    { title: "Velocidad", desc: "No aceleres de más" },
+                    { title: "Técnica", desc: "Técnica limpia" },
+                    { title: "Ritmo", desc: "Ritmo constante" }
                 ]
             },
             {
                 id: 9,
-                name: "Mini Murph",
-                description: "Versión adaptada del legendario Murph. Trabajo de alto volumen con opción de particionar.",
-                difficulty: "hard",
-                difficultyLabel: "Difícil",
-                totalTime: 50,
+                name: "KB Strength",
+                description: "Fuerza de cadera con kettlebell.",
+                difficulty: "medium",
+                difficultyLabel: "Medio",
+                focus: "lower",
+                focusLabel: "Lower",
+                totalTime: 18,
                 warmup: {
                     time: 10,
                     format: "3 rounds",
                     exercises: [
-                        { name: "Inchworms", reps: "10", video: "7458390246472813830" },
+                        { name: "Inchworms", reps: "10" },
                         { name: "Air Squats", reps: "15" },
                         { name: "DB Swings ligeros", reps: "10" },
                         { name: "Push-ups", reps: "10" },
@@ -1112,46 +1132,34 @@
                     ]
                 },
                 main: {
-                    time: 30,
-                    format: "For time",
+                    time: 13,
+                    format: "For Time ~13min",
                     exercises: [
-                        { name: "Marcha/trote en sitio (o 2min burpees)", reps: "400m" },
-                        { name: "DB Bent-over Rows", reps: "25", note: "15kg c/u" },
-                        { name: "Push-ups", reps: "50" },
-                        { name: "Air Squats", reps: "75" },
-                        { name: "Marcha/trote (o 2min burpees)", reps: "400m" }
-                    ],
-                    notes: "Puedes particionar: 5 rounds de 5-10-15"
-                },
-                finisher: {
-                    time: 10,
-                    format: "4 rondas",
-                    exercises: [
-                        { name: "Plank", reps: "30seg" },
-                        { name: "Side Plank derecho", reps: "30seg" },
-                        { name: "Side Plank izquierdo", reps: "30seg" },
-                        { name: "Leg Raises", reps: "15" },
-                        { name: "Burpees", reps: "10" }
+                        { name: "KB Deadlift", reps: "20" },
+                        { name: "KB Swings", reps: "20" },
+                        { name: "Squats", reps: "20" }
                     ]
                 },
                 tips: [
-                    { title: "Partición", desc: "5 rounds de 5-10-15 es más manejable" },
-                    { title: "Push-ups", desc: "Rompe en sets antes de fallar" },
-                    { title: "Cardio", desc: "Los 400m son para mantener ritmo, no sprint" }
+                    { title: "Cadera", desc: "Cadera atrás" },
+                    { title: "Espalda", desc: "Espalda neutra" },
+                    { title: "Control", desc: "Controla bajadas" }
                 ]
             },
             {
                 id: 10,
-                name: "Cindy Extended",
-                description: "AMRAP de 30 minutos del clásico Cindy. Resistencia muscular y mental al máximo.",
-                difficulty: "easy",
-                difficultyLabel: "Fácil",
-                totalTime: 50,
+                name: "Classic Engine",
+                description: "Clásico metabólico full body.",
+                difficulty: "medium",
+                difficultyLabel: "Medio",
+                focus: "balanced",
+                focusLabel: "Balanceado",
+                totalTime: 17,
                 warmup: {
                     time: 10,
                     format: "3 rounds",
                     exercises: [
-                        { name: "Inchworms", reps: "10", video: "7458390246472813830" },
+                        { name: "Inchworms", reps: "10" },
                         { name: "Air Squats", reps: "15" },
                         { name: "DB Swings ligeros", reps: "10" },
                         { name: "Push-ups", reps: "10" },
@@ -1160,29 +1168,186 @@
                     ]
                 },
                 main: {
-                    time: 30,
-                    format: "AMRAP 30min",
+                    time: 12,
+                    format: "AMRAP 12min",
                     exercises: [
-                        { name: "Push-ups", reps: "5" },
-                        { name: "Air Squats", reps: "10" },
-                        { name: "KB Swings", reps: "15" }
-                    ]
-                },
-                finisher: {
-                    time: 10,
-                    format: "4 rondas",
-                    exercises: [
-                        { name: "Plank", reps: "30seg" },
-                        { name: "Side Plank derecho", reps: "30seg" },
-                        { name: "Side Plank izquierdo", reps: "30seg" },
-                        { name: "Leg Raises", reps: "15" },
-                        { name: "Burpees", reps: "10" }
+                        { name: "Burpees", reps: "10" },
+                        { name: "Squats", reps: "10" },
+                        { name: "Push-ups", reps: "10" }
                     ]
                 },
                 tips: [
-                    { title: "AMRAP", desc: "Cuenta tus rondas, el objetivo es mejorar cada vez" },
-                    { title: "Consistencia", desc: "Mejor 1 ronda cada 90seg que quemar rápido" },
-                    { title: "Push-ups", desc: "Solo 5, hazlos con buena forma siempre" }
+                    { title: "Ritmo", desc: "Ritmo respirable" },
+                    { title: "Técnica", desc: "Técnica antes que reps" },
+                    { title: "Divide", desc: "Divide si es necesario" }
+                ]
+            },
+            {
+                id: 11,
+                name: "Full Body Press & Hinge",
+                description: "Trabajo completo combinando empuje y bisagra con alta demanda metabólica.",
+                difficulty: "hard",
+                difficultyLabel: "Difícil",
+                focus: "balanced",
+                focusLabel: "Balanceado",
+                totalTime: 20,
+                warmup: {
+                    time: 6,
+                    format: "3 rondas – 6min",
+                    exercises: [
+                        { name: "Squats", reps: "12" },
+                        { name: "DB Shoulder Press ligeros", reps: "10" },
+                        { name: "KB Deadlift ligeros", reps: "8" }
+                    ]
+                },
+                main: {
+                    time: 14,
+                    format: "AMRAP 14min",
+                    exercises: [
+                        { name: "DB Squats (pesados)", reps: "10" },
+                        { name: "DB Shoulder Press", reps: "10" },
+                        { name: "KB Deadlift (pesados)", reps: "8" },
+                        { name: "Burpees", reps: "8" }
+                    ]
+                },
+                tips: [
+                    { title: "Carga", desc: "Escoge bien la carga" },
+                    { title: "Fatiga", desc: "Mantén técnica bajo fatiga" },
+                    { title: "Respiración", desc: "Respira entre bloques" }
+                ]
+            },
+            {
+                id: 12,
+                name: "Power Chipper",
+                description: "Chipper explosivo enfocado en piernas.",
+                difficulty: "medium",
+                difficultyLabel: "Medio",
+                focus: "lower",
+                focusLabel: "Lower",
+                totalTime: 20,
+                warmup: {
+                    time: 5,
+                    format: "3 rondas – 5min",
+                    exercises: [
+                        { name: "Squats", reps: "10" },
+                        { name: "Push-ups", reps: "8" },
+                        { name: "DB Shoulder Press ligeros", reps: "10" }
+                    ]
+                },
+                main: {
+                    time: 15,
+                    format: "For Time ~15min",
+                    exercises: [
+                        { name: "Jump Squats", reps: "20" },
+                        { name: "DB Thrusters", reps: "15" },
+                        { name: "KB Swings (pesados)", reps: "12" },
+                        { name: "Push-ups", reps: "10" }
+                    ]
+                },
+                tips: [
+                    { title: "Energía", desc: "Administra energía" },
+                    { title: "Core", desc: "Mantén core firme" },
+                    { title: "Respiración", desc: "Respira profundo" }
+                ]
+            },
+            {
+                id: 13,
+                name: "EMOM Strength Flow",
+                description: "Fuerza y control en formato EMOM.",
+                difficulty: "medium",
+                difficultyLabel: "Medio",
+                focus: "upper",
+                focusLabel: "Upper",
+                totalTime: 21,
+                warmup: {
+                    time: 5,
+                    format: "3 rondas – 5min",
+                    exercises: [
+                        { name: "Push-ups", reps: "8" },
+                        { name: "KB Swings ligeros", reps: "12" },
+                        { name: "Plank", reps: "20seg" }
+                    ]
+                },
+                main: {
+                    time: 16,
+                    format: "EMOM 16min",
+                    exercises: [
+                        { name: "Min 1: Barbell Bent Over Rows", reps: "10" },
+                        { name: "Min 2: KB Swings (moderados)", reps: "12" },
+                        { name: "Min 3: Push-ups", reps: "8" },
+                        { name: "Min 4: Plank lateral", reps: "20seg", note: "alternar lados" }
+                    ]
+                },
+                tips: [
+                    { title: "Calidad", desc: "Cumple reps con calidad" },
+                    { title: "Cargas", desc: "Usa cargas controlables" },
+                    { title: "Core", desc: "Mantén core activo" }
+                ]
+            },
+            {
+                id: 14,
+                name: "Goblet Grinder",
+                description: "Trabajo de piernas sostenido y demandante.",
+                difficulty: "medium",
+                difficultyLabel: "Medio",
+                focus: "lower",
+                focusLabel: "Lower",
+                totalTime: 17,
+                warmup: {
+                    time: 5,
+                    format: "3 rondas – 5min",
+                    exercises: [
+                        { name: "Squats", reps: "12" },
+                        { name: "Jump Squats", reps: "10" },
+                        { name: "DB Romanian Deadlift ligeros", reps: "10" }
+                    ]
+                },
+                main: {
+                    time: 12,
+                    format: "For Time, 3 rounds ~12min",
+                    exercises: [
+                        { name: "Goblet Squats (pesados)", reps: "12" },
+                        { name: "DB Overhead Press", reps: "10" },
+                        { name: "Burpees", reps: "8" }
+                    ]
+                },
+                tips: [
+                    { title: "Postura", desc: "Mantén postura" },
+                    { title: "Respiración", desc: "Controla respiración" },
+                    { title: "Ritmo", desc: "No aceleres de más" }
+                ]
+            },
+            {
+                id: 15,
+                name: "Classic DB Engine",
+                description: "WOD clásico con mancuernas, ritmo constante.",
+                difficulty: "medium",
+                difficultyLabel: "Medio",
+                focus: "balanced",
+                focusLabel: "Balanceado",
+                totalTime: 17,
+                warmup: {
+                    time: 5,
+                    format: "3 rondas – 5min",
+                    exercises: [
+                        { name: "Squats", reps: "10" },
+                        { name: "Push-ups", reps: "8" },
+                        { name: "DB Shoulder Press ligeros", reps: "8" }
+                    ]
+                },
+                main: {
+                    time: 12,
+                    format: "AMRAP 12min",
+                    exercises: [
+                        { name: "DB Thrusters", reps: "10" },
+                        { name: "Push-ups", reps: "10" },
+                        { name: "KB Swings", reps: "10" }
+                    ]
+                },
+                tips: [
+                    { title: "Ritmo", desc: "Ritmo sostenido" },
+                    { title: "Técnica", desc: "Técnica limpia" },
+                    { title: "Transiciones", desc: "Respira en cada transición" }
                 ]
             }
         ];
@@ -1190,12 +1355,18 @@
         // Render WOD Cards
         function renderWodCards(filter = 'all') {
             const grid = document.getElementById('wodGrid');
-            const filteredWods = filter === 'all' ? wods : wods.filter(w => w.difficulty === filter);
+            let filteredWods = wods;
+            if (filter === 'easy' || filter === 'medium' || filter === 'hard') {
+                filteredWods = wods.filter(w => w.difficulty === filter);
+            } else if (filter === 'upper' || filter === 'lower' || filter === 'balanced') {
+                filteredWods = wods.filter(w => w.focus === filter);
+            }
 
             grid.innerHTML = filteredWods.map(wod => `
-                <div class="wod-card" onclick="showWodDetail(${wod.id})" data-difficulty="${wod.difficulty}">
+                <div class="wod-card" onclick="showWodDetail(${wod.id})" data-difficulty="${wod.difficulty}" data-focus="${wod.focus}">
                     <div class="wod-card-header">
                         <span class="wod-number">WOD-${String(wod.id).padStart(2, '0')}</span>
+                        <span class="wod-focus">${wod.focusLabel}</span>
                         <span class="wod-difficulty ${wod.difficulty}">${wod.difficultyLabel}</span>
                     </div>
                     <h3 class="wod-name">${wod.name}</h3>
@@ -1232,6 +1403,7 @@
                 <div class="detail-header">
                     <div class="detail-badges">
                         <span class="wod-number">WOD-${String(wod.id).padStart(2, '0')}</span>
+                        <span class="wod-focus">${wod.focusLabel}</span>
                         <span class="wod-difficulty ${wod.difficulty}">${wod.difficultyLabel}</span>
                     </div>
                     <h1 class="detail-title">${wod.name}</h1>
